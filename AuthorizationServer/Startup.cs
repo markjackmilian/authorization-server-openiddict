@@ -45,6 +45,8 @@ namespace AuthorizationServer
                         .AllowClientCredentialsFlow()
                         .AllowAuthorizationCodeFlow()
                             .RequireProofKeyForCodeExchange()
+                        .AllowPasswordFlow()
+                            // .AcceptAnonymousClients()
                         .AllowRefreshTokenFlow();
 
                     options
