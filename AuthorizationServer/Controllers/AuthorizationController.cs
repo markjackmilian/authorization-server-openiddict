@@ -96,6 +96,40 @@ namespace AuthorizationServer.Controllers
                 // Retrieve the claims principal stored in the refresh token.
                 claimsPrincipal = (await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)).Principal;
             }
+            else if (request.IsPasswordGrantType())
+            {
+                // Validate the user credentials.
+                // Note: to mitigate brute force attacks, you SHOULD strongly consider
+                // applying a key derivation function like PBKDF2 to slow down
+                // the password validation process. You SHOULD also consider
+                // using a time-constant comparer to prevent timing attacks.
+                // if (request.Username != "alice@wonderland.com" ||
+                //     request.Password != "P@ssw0rd")
+                // {
+                //     return Forbid(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+                // }
+                
+                // Create a new ClaimsIdentity holding the user identity.
+                var identity = new ClaimsIdentity(
+                    OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
+                    OpenIddictConstants.Claims.Name,
+                    OpenIddictConstants.Claims.Role);
+                
+                // Add a "sub" claim containing the user identifier, and attach
+                // the "access_token" destination to allow OpenIddict to store it
+                // in the access token, so it can be retrieved from your controllers.
+                identity.AddClaim(OpenIddictConstants.Claims.Subject,
+                    "71346D62-9BA5-4B6D-9ECA-755574D628D8",
+                    OpenIddictConstants.Destinations.AccessToken);
+                identity.AddClaim(OpenIddictConstants.Claims.Name, request.Username,
+                    OpenIddictConstants.Destinations.AccessToken);
+                // ... add other claims, if necessary.
+                
+                claimsPrincipal = new ClaimsPrincipal(identity);
+
+                claimsPrincipal.SetScopes(request.GetScopes());
+                // Ask OpenIddict to generate a new token and return an OAuth2 token response.
+            }
 
             else
             {
