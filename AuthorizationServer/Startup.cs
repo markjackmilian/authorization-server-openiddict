@@ -21,8 +21,10 @@ namespace AuthorizationServer
             
             services.AddDbContext<DbContext>(options =>
             {
+                options.UseSqlServer("Server=localhost;Database=oiddict;User Id=sa;Password=123Stella!");
+                
                 // Configure the context to use an in-memory store.
-                options.UseInMemoryDatabase(nameof(DbContext));
+                // options.UseInMemoryDatabase(nameof(DbContext));
 
                 // Register the entity sets needed by OpenIddict.
                 options.UseOpenIddict();
