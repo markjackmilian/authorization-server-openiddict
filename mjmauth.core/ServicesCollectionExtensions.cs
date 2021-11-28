@@ -1,0 +1,98 @@
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace mjmauth.core;
+
+public static class ServicesCollectionExtensions
+{
+    public static MjmAuthBuilder AddMjmAuth(this IServiceCollection services)
+    {
+        return new MjmAuthBuilder(services);
+    }
+
+    public class MjmAuthBuilder
+    {
+        private readonly IServiceCollection _serviceCollection;
+        private readonly OpenIddictBuilder _openIdBuilder;
+
+        protected internal MjmAuthBuilder(IServiceCollection serviceCollection)
+        {
+            this._serviceCollection = serviceCollection;
+            this.AddViewAndAuth();
+            this._openIdBuilder = this._serviceCollection.AddOpenIddict();
+        }
+
+        private void AddViewAndAuth()
+        {
+            this._serviceCollection.AddControllersWithViews();
+
+            this._serviceCollection.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                    options => { options.LoginPath = "/account/login"; });
+        }
+
+        /// <summary>
+        /// Add DbContext with OpenIdDict tables
+        /// </summary>
+        /// <param name="options"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public MjmAuthBuilder WithContext<T>(Action<DbContextOptionsBuilder> options) where T : DbContext
+        {
+            this._serviceCollection.AddDbContext<T>(builder =>
+            {
+                options.Invoke(builder);
+                builder.UseOpenIddict();
+            });
+
+            return this;
+        }
+
+
+        public MjmAuthBuilder WithDefultStartup()
+        {
+            // Register the OpenIddict core components.
+            this._openIdBuilder.AddCore(options =>
+                {
+                    // Configure OpenIddict to use the EF Core stores/models.
+                    options.UseEntityFrameworkCore()
+                        .UseDbContext<DbContext>();
+                })
+
+                // Register the OpenIddict server components.
+                .AddServer(options =>
+                {
+                    options
+                        .AllowClientCredentialsFlow()
+                        .AllowAuthorizationCodeFlow()
+                        .RequireProofKeyForCodeExchange()
+                        .AllowPasswordFlow()
+                        // .AcceptAnonymousClients()
+                        .AllowRefreshTokenFlow();
+
+                    options
+                        .SetTokenEndpointUris("/connect/token")
+                        .SetAuthorizationEndpointUris("/connect/authorize")
+                        .SetUserinfoEndpointUris("/connect/userinfo");
+
+                    // Encryption and signing of tokens
+                    options
+                        .AddEphemeralEncryptionKey()
+                        .AddEphemeralSigningKey()
+                        .DisableAccessTokenEncryption();
+
+                    // Register scopes (permissions)
+                    options.RegisterScopes("api");
+
+                    // Register the ASP.NET Core host and configure the ASP.NET Core-specific options.
+                    options
+                        .UseAspNetCore()
+                        .EnableTokenEndpointPassthrough()
+                        .EnableAuthorizationEndpointPassthrough()
+                        .EnableUserinfoEndpointPassthrough();            
+                });
+            return this;
+        }
+    }
+}

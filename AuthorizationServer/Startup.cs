@@ -1,9 +1,11 @@
+using System;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using mjmauth.core;
 
 namespace AuthorizationServer
 {
@@ -11,67 +13,76 @@ namespace AuthorizationServer
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+
+            services.AddMjmAuth()
+                .WithContext<DbContext>(builder =>
                 {
-                    options.LoginPath = "/account/login";
-                });
+                    builder.UseSqlServer("Server=localhost;Database=oiddict;User Id=sa;Password=123Stella!");
+                })
+                .WithDefultStartup();
             
-            services.AddDbContext<DbContext>(options =>
-            {
-                options.UseSqlServer("Server=localhost;Database=oiddict;User Id=sa;Password=123Stella!");
-                
-                // Configure the context to use an in-memory store.
-                // options.UseInMemoryDatabase(nameof(DbContext));
+            
+            // services.AddControllersWithViews();
+            //
+            // services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+            //     {
+            //         options.LoginPath = "/account/login";
+            //     });
+            
+            // services.AddDbContext<DbContext>(options =>
+            // {
+            //     options.UseSqlServer("Server=localhost;Database=oiddict;User Id=sa;Password=123Stella!");
+            //     
+            //     // Configure the context to use an in-memory store.
+            //     // options.UseInMemoryDatabase(nameof(DbContext));
+            //
+            //     // Register the entity sets needed by OpenIddict.
+            //     options.UseOpenIddict();
+            // });
 
-                // Register the entity sets needed by OpenIddict.
-                options.UseOpenIddict();
-            });
-
-            services.AddOpenIddict()
+            // services.AddOpenIddict()
 
                 // Register the OpenIddict core components.
-                .AddCore(options =>
-                {
-                    // Configure OpenIddict to use the EF Core stores/models.
-                    options.UseEntityFrameworkCore()
-                        .UseDbContext<DbContext>();
-                })
+                // .AddCore(options =>
+                // {
+                //     // Configure OpenIddict to use the EF Core stores/models.
+                //     options.UseEntityFrameworkCore()
+                //         .UseDbContext<DbContext>();
+                // })
 
                 // Register the OpenIddict server components.
-                .AddServer(options =>
-                {
-                    options
-                        .AllowClientCredentialsFlow()
-                        .AllowAuthorizationCodeFlow()
-                            .RequireProofKeyForCodeExchange()
-                        .AllowPasswordFlow()
-                            // .AcceptAnonymousClients()
-                        .AllowRefreshTokenFlow();
-
-                    options
-                        .SetTokenEndpointUris("/connect/token")
-                        .SetAuthorizationEndpointUris("/connect/authorize")
-                        .SetUserinfoEndpointUris("/connect/userinfo");
-
-                    // Encryption and signing of tokens
-                    options
-                        .AddEphemeralEncryptionKey()
-                        .AddEphemeralSigningKey()
-                        .DisableAccessTokenEncryption();
-
-                    // Register scopes (permissions)
-                    options.RegisterScopes("api");
-
-                    // Register the ASP.NET Core host and configure the ASP.NET Core-specific options.
-                    options
-                        .UseAspNetCore()
-                        .EnableTokenEndpointPassthrough()
-                        .EnableAuthorizationEndpointPassthrough()
-                        .EnableUserinfoEndpointPassthrough();            
-                });
+                // .AddServer(options =>
+                // {
+                //     options
+                //         .AllowClientCredentialsFlow()
+                //         .AllowAuthorizationCodeFlow()
+                //             .RequireProofKeyForCodeExchange()
+                //         .AllowPasswordFlow()
+                //             // .AcceptAnonymousClients()
+                //         .AllowRefreshTokenFlow();
+                //
+                //     options
+                //         .SetTokenEndpointUris("/connect/token")
+                //         .SetAuthorizationEndpointUris("/connect/authorize")
+                //         .SetUserinfoEndpointUris("/connect/userinfo");
+                //
+                //     // Encryption and signing of tokens
+                //     options
+                //         .AddEphemeralEncryptionKey()
+                //         .AddEphemeralSigningKey()
+                //         .DisableAccessTokenEncryption();
+                //
+                //     // Register scopes (permissions)
+                //     options.RegisterScopes("api");
+                //
+                //     // Register the ASP.NET Core host and configure the ASP.NET Core-specific options.
+                //     options
+                //         .UseAspNetCore()
+                //         .EnableTokenEndpointPassthrough()
+                //         .EnableAuthorizationEndpointPassthrough()
+                //         .EnableUserinfoEndpointPassthrough();            
+                // });
             
             services.AddHostedService<TestData>();
         }
