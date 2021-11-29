@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace mjmauth.core;
 
@@ -41,13 +43,12 @@ public class MjmAuthBuilder
 
     private void AddViewAndAuth()
     {
-        // this._serviceCollection.Configure<RazorViewEngineOptions>(options =>
-        // {
-        //     options.
-        //     options.FileProviders.Add(new Microsoft.Extensions.FileProviders.EmbeddedFileProvider(this.GetType().Assembly));
-        // });
         
-        this._serviceCollection.AddControllersWithViews().AddApplicationPart(this.GetType().Assembly);
+        this._serviceCollection.AddControllersWithViews().AddApplicationPart(this.GetType().Assembly).AddRazorRuntimeCompilation();
+        this._serviceCollection.Configure<MvcRazorRuntimeCompilationOptions>(options =>
+        {
+            options.FileProviders.Add(new EmbeddedFileProvider(this.GetType().Assembly));
+        });
 
         this._serviceCollection.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
