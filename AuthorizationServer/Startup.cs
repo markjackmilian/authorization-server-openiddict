@@ -19,7 +19,7 @@ namespace AuthorizationServer
                 {
                     builder.UseSqlServer("Server=localhost;Database=oiddict;User Id=sa;Password=123Stella!");
                 })
-                .WithDefultStartup();
+                .WithDefaultStartup();
             
             
             // services.AddControllersWithViews();

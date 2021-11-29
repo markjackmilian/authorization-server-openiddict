@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceServer", "ResourceS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mjmauth.core", "mjmauth.core\mjmauth.core.csproj", "{5FA63A5A-00B1-4B67-AE95-BA0D282891E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebXample", "WebXample\WebXample.csproj", "{1B6BF608-CBAB-41E4-B262-2AC2ED5F2F51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{5FA63A5A-00B1-4B67-AE95-BA0D282891E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FA63A5A-00B1-4B67-AE95-BA0D282891E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FA63A5A-00B1-4B67-AE95-BA0D282891E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6BF608-CBAB-41E4-B262-2AC2ED5F2F51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6BF608-CBAB-41E4-B262-2AC2ED5F2F51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6BF608-CBAB-41E4-B262-2AC2ED5F2F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6BF608-CBAB-41E4-B262-2AC2ED5F2F51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
