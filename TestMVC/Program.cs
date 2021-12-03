@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore;
 using mjmauth.core;
 using TestMVC.Areas.Identity.Data;
 using TestMVC.Data;
@@ -15,6 +16,9 @@ builder.Services.AddDefaultIdentity<TestMVCUser>(options => options.SignIn.Requi
       .AddEntityFrameworkStores<TestMVCContext>();
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+    app.UseMigrationsEndPoint();
 app.UseStaticFiles();
 app.MapControllerRoute(
     name: "default",
