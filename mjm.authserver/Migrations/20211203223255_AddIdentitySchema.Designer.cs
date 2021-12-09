@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApplication1.Data;
+using mjm.authserver.Data;
 
 #nullable disable
 
-namespace WebApplication1.Migrations
+namespace mjm.authserver.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20211203223255_AddIdentitySchema")]

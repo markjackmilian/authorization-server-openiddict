@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
 
-namespace WebApplication1.Controllers
+namespace mjm.authserver.Controllers
 {
     public class AuthorizationController : Controller
     {

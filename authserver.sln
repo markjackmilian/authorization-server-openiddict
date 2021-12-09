@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorizationServer", "Auth
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceServer", "ResourceServer\ResourceServer.csproj", "{F14E00FA-A3BE-4FFE-B02C-EFE3CC936D0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{711DDA4C-09CA-4B45-B298-4F8CC9D664A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mjm.authserver", "mjm.authserver\mjm.authserver.csproj", "{711DDA4C-09CA-4B45-B298-4F8CC9D664A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mjmauth.core", "mjmauth.core\mjmauth.core.csproj", "{75B45D4C-44E2-40FF-B195-E04647A6160C}"
 EndProject

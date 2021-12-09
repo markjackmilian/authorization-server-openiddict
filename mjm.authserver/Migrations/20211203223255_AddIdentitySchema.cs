@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace WebApplication1.Migrations
+namespace mjm.authserver.Migrations
 {
     public partial class AddIdentitySchema : Migration
     {

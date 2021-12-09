@@ -1,4 +1,4 @@
-namespace WebApplication1.Models;
+namespace mjm.authserver.Models;
 
 public class ErrorViewModel
 {

@@ -1,7 +1,7 @@
+using mjm.authserver.Data;
 using OpenIddict.Abstractions;
-using WebApplication1.Data;
 
-namespace WebApplication1;
+namespace mjm.authserver;
 
 public class TestData : IHostedService
 {

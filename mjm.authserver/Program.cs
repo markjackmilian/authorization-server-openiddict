@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WebApplication1;
-using WebApplication1.Data;
+using mjm.authserver;
+using mjm.authserver.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
