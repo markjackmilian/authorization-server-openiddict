@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using mjm.authserver;
+using mjm.authserver.Classes;
 using mjm.authserver.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,9 +61,16 @@ builder.Services.AddOpenIddict()
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<Program>()
+    .AddClasses(classes => classes.AssignableTo<IScoped>())
+    .AsImplementedInterfaces()
+    .WithScopedLifetime());            
 
 builder.Services.AddHostedService<TestData>();
 
