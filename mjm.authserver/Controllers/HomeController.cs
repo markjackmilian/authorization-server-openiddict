@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using mjm.authserver.Models;
@@ -6,6 +7,7 @@ using mjm.authserver.Services;
 
 namespace mjm.authserver.Controllers;
 
+[Authorize(Roles = "authAdmin")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -17,6 +19,7 @@ public class HomeController : Controller
         this._userService = userService;
     }
 
+    [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
         var exists = await this._userService.AdminExists();
@@ -26,15 +29,22 @@ public class HomeController : Controller
         return this.RedirectToAction("CreateAdminUser");
     }
 
+    [AllowAnonymous]
     public IActionResult CreateAdminUser()
     {
         return this.View();
     }
     
+    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> CreateAdminUser(AuthAdminUserModel model)
     {
         await this._userService.CreateAdminUser(model);
+        return this.RedirectToAction("Index");
+    }
+
+    public IActionResult DashBoard()
+    {
         return this.View();
     }
 
