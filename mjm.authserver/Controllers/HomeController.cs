@@ -23,10 +23,7 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {
         var exists = await this._userService.AdminExists();
-        if(exists)
-            return this.View();
-
-        return this.RedirectToAction("CreateAdminUser");
+        return this.RedirectToAction(exists ? "DashBoard" : "CreateAdminUser");
     }
 
     [AllowAnonymous]

@@ -1,8 +1,49 @@
 @model dynamic
 
-@{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
-}
 
-<h2>title</h2>
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-header">
+                    Apps
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Apps Management</h5>
+                    <p class="card-text">Create and manage authorized apps.</p>
+                    <a asp-controller="Apps" asp-action="Index" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-header">
+                    Users
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Users Management</h5>
+                    <p class="card-text">Create and manage authorized users.</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-header">
+                    Roles
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Roles Management</h5>
+                    <p class="card-text">Create and manage roles.</p>
+                    <br/>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
