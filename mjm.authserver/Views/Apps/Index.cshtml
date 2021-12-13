@@ -1,9 +1,36 @@
-@model dynamic
+@model OpenIddict.EntityFrameworkCore.Models.OpenIddictEntityFrameworkCoreApplication[]
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
-}
+}    
 
-<h2>title</h2>
+<div class="row">
+  <a class="btn btn-info" asp-controller="Apps" asp-action="Edit" >Add</a>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>    
+  
+  @foreach (var app in Model)
+  {
+    <tr>
+      <th>@app.Id</th>
+      <td>@app.DisplayName</td>
+      <td>@app.Type</td>
+      <td></td>
+    </tr>
+  }
+  
+
+  </tbody>
+</table>
 

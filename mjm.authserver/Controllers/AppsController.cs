@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using mjm.authserver.Services;
+using OpenIddict.EntityFrameworkCore.Models;
 
 namespace mjm.authserver.Controllers;
 
@@ -16,6 +17,12 @@ public class AppsController : Controller
     public async Task<IActionResult> Index()
     {
         var apps = await this._appService.GetApps();
-        return View();
+        return View(apps);
+    }
+
+    public IActionResult Edit(Guid? id = null)
+    {
+        var app = new OpenIddictEntityFrameworkCoreApplication();
+        return this.View(app);
     }
 }
