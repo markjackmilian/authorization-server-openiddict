@@ -25,4 +25,12 @@ public class AppsController : Controller
         var app = new OpenIddictEntityFrameworkCoreApplication();
         return this.View(app);
     }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(OpenIddictEntityFrameworkCoreApplication application)
+    {
+        var app = new OpenIddictEntityFrameworkCoreApplication();
+        return this.View(app);
+    }
 }

@@ -7,4 +7,18 @@
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+
+<form asp-controller="Apps" asp-action="Edit" method="POST">     
+    @Html.EditorForModel()
+    
+    <div class="mb-3">
+        <label for="displayName" class="form-label">Display name</label>
+        <input asp-for="DisplayName" type="email" class="form-control" id="displayName" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+        <label for="clientSecret" class="form-label">Client secret</label>
+        <input asp-for="ClientSecret" type="email" class="form-control" id="clientSecret" >
+    </div>
+    <input type="submit" value="Salva"/>
+</form>
