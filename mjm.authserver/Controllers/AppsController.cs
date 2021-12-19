@@ -20,9 +20,9 @@ public class AppsController : Controller
         return View(apps);
     }
 
-    public IActionResult Edit(Guid? id = null)
+    public async Task<IActionResult> Edit(string id = null)
     {
-        var app = new OpenIddictEntityFrameworkCoreApplication();
+        var app = id == null ? new OpenIddictEntityFrameworkCoreApplication() : await this._appService.GetApp(id);
         return this.View(app);
     }
     

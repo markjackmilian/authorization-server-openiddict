@@ -8,6 +8,7 @@ namespace mjm.authserver.Services;
 public interface IAppService
 {
     Task<OpenIddictEntityFrameworkCoreApplication[]> GetApps();
+    Task<OpenIddictEntityFrameworkCoreApplication> GetApp(string id);
 }
 
 class AppService : IAppService, IScoped
@@ -23,5 +24,15 @@ class AppService : IAppService, IScoped
     {
         var apps = await this._applicationManager.ListAsync().ToListAsync();
         return apps.Cast<OpenIddictEntityFrameworkCoreApplication>().ToArray();
+    }
+
+    public async Task<OpenIddictEntityFrameworkCoreApplication> GetApp(string id)
+    {
+        var app = await this._applicationManager.FindByIdAsync(id);
+        if (app == null)
+            throw new Exception($"App with Id: {id} not found.");
+
+        return (OpenIddictEntityFrameworkCoreApplication)app;
+
     }
 }

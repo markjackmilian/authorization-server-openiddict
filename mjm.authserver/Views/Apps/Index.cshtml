@@ -3,34 +3,34 @@
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
-}    
+}
 
 <div class="row">
-  <a class="btn btn-info" asp-controller="Apps" asp-action="Edit" >Add</a>
+    <a class="btn btn-info" asp-controller="Apps" asp-action="Edit">Add</a>
 </div>
 
 <table class="table">
-  <thead>
+    <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Type</th>
-      <th scope="col">Actions</th>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Actions</th>
     </tr>
-  </thead>
-  <tbody>    
-  
-  @foreach (var app in Model)
-  {
-    <tr>
-      <th>@app.Id</th>
-      <td>@app.DisplayName</td>
-      <td>@app.Type</td>
-      <td></td>
-    </tr>
-  }
-  
+    </thead>
+    <tbody>
 
-  </tbody>
+    @foreach (var app in Model)
+    {
+        <tr>
+            <th>@app.Id</th>
+            <td>@app.DisplayName</td>
+            <td>@app.Type</td>
+            <td>
+                <a class="btn btn-info" asp-controller="Apps" asp-action="Edit" asp-route-id="@app.Id">Edit</a>
+            </td>
+        </tr>
+    }
+
+    </tbody>
 </table>
-
